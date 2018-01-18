@@ -15,6 +15,7 @@ class CommandArgError(Exception):
     def __init__(self, msg):
         self.msg = msg
 
+server = None
 
 def main(argv=None):
     if argv is None:
@@ -33,6 +34,7 @@ def main(argv=None):
         if not os.path.isfile(text_file_path):
             raise CommandArgError("The file %s doesn't exist!" % text_file_path)
 
+        global server
         server = Server(settings, text_file_path)
         server.start()
 
