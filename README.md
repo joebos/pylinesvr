@@ -1,9 +1,10 @@
 # pylinesvr
 Line Server - Python implementation
 
+This readme file is same as in golinesvr repo. You only need to read once.
 
-<p>Python implementation: https://github.com/joebos/pylineserver</p>
-<p>Golang implementation: https://github.com/joebos/golinesvr  (This repo)</p>
+<p>Python implementation: https://github.com/joebos/pylineserver (This repo)</p>
+<p>Golang implementation: https://github.com/joebos/golinesvr</p>
 
 <p>Load testing tool (Go): https://github.com/joebos/goloadtester</p>
 
@@ -12,7 +13,7 @@ go version go1.9.2 linux/amd64
 pip 9.0.1 from /home/white/env27b/lib/python2.7/site-packages (python 2.7)
 
 
-# Line Server written in Go
+# Line Server
 <h2>1. How does your system work? (if not addressed in comments in source)</h2>
 
 The system listens the TCP port, and accept connection from clients, and then call a goroutine to hanle any new connection on a seperate thread so other clients can make connection to the system too.
