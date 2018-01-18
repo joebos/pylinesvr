@@ -1,6 +1,14 @@
 # pylinesvr
 Line Server - Python implementation
 
+
+<p>Python implementation: https://github.com/joebos/pylineserver</p>
+<p>Golang implementation: https://github.com/joebos/golinesvr  (This repo)</p>
+
+<p>Load testing tool (Go): https://github.com/joebos/goloadtester</p>
+
+Environment (developed and tested):
+go version go1.9.2 linux/amd64
 pip 9.0.1 from /home/white/env27b/lib/python2.7/site-packages (python 2.7)
 
 
@@ -21,7 +29,7 @@ In order to deal with a large number of lines where all the line numbers could n
 
 Go Line Server performance          |  Python Line Server performance
 :-------------------------:|:-------------------------:
-![Go Line server load test result](https://github.com/joebos/golineserver/blob/master/GoLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golineserver/blob/master/PyLineServer50M1M.png)
+![Go Line server load test result](https://github.com/joebos/golinesvr/blob/master/GoLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golinesvr/blob/master/PyLineServer50M1M.png)
 
 From the above performance charts, we can see that Go performs more consistently than Python. The longest times taken for Python line server is about 10 times than averages, whereas for Go line server about 2-3 times than averages. The reason why Python max times are bigger is because of creating and closing processes. However, on average, Python takes less time than Go. I could have implemented line server using python thread, however, Python has GIL lock, i.e. code can only run one at time. There is no real thread concurrency in Python.
 If client connection is long lived, forking processes performs better for most of user requests. However, if client connection is short lived, threading model performs better.
@@ -32,13 +40,13 @@ If client connection is long lived, forking processes performs better for most o
 
 Go Line Server performance - 50M file         |  Go Line Server performance - 10G file
 :-------------------------:|:-------------------------:
-![Go Line server load test result](https://github.com/joebos/golineserver/blob/master/GoLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golineserver/blob/master/GoLineServer10G11M.png)
+![Go Line server load test result](https://github.com/joebos/golinesvr/blob/master/GoLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golinesvr/blob/master/GoLineServer10G11M.png)
 
 As the file gets bigger, Go line server takes more time to respond.
 
 Python Line Server performance - 50M file         |  Python Line Server performance - 10G file
 :-------------------------:|:-------------------------:
-![Python Line server load test result](https://github.com/joebos/golineserver/blob/master/PyLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golineserver/blob/master/PyLineServer10G11M.png)
+![Python Line server load test result](https://github.com/joebos/golinesvr/blob/master/PyLineServer50M1M.png)  |  ![Python Line server load test result](https://github.com/joebos/golinesvr/blob/master/PyLineServer10G11M.png)
 
 For Python line server, the performance is virtually not changed. Again, this is because of forking process. Python line server takes more cpu and resources because of all the child processes, thus it performs better than Go as the text file gets bigger.
 For big files, perhaps we can use process + threading model. We can set limits on # of threads per process, once # of threads reaches the limit, we can fork new process. I think Python uwsgi has this process + thread model for http requests.
