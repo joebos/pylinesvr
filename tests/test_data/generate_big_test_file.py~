@@ -1,0 +1,49 @@
+
+import sys
+import random
+import string
+import getopt
+import os
+
+
+class CommandArgError(Exception):
+    def __init__(self, msg):
+        self.msg = msg
+
+def main(argv=None):
+
+    server = None
+
+    if argv is None:
+        argv = sys.argv
+    try:
+        opts, args = getopt.getopt(argv[1:], [])
+
+        if len(args) < 3:
+            raise CommandArgError("Invalid args! Please enter: {0} {1} {2} {3} {4}".format("python", __file__, "file_name", "num_of_lines", "max_num_of_chars_in_each_line"))
+
+        file_name = args[0]
+
+        num_of_lines = int(args[1])
+
+        max_num_of_chars_in_each_line = int(args[2])  # 1 Mb of text
+
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, file_name), 'w+') as f:
+            for i in range(num_of_lines):
+                print "writing %s of %s" % (i, num_of_lines)
+                num_of_chars = random.randint(1, max_num_of_chars_in_each_line)
+                chars = ''.join([random.choice(string.letters) for i in range(num_of_chars)])
+                f.write(chars)
+                f.write("\n")
+
+    except CommandArgError, err:
+        print err.msg
+        return -1
+
+    except Exception, arg:
+        print arg.message
+        return -1
+
+if __name__ == "__main__":
+    sys.exit(main())
